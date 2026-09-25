@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 {
     static readonly int Speed = Animator.StringToHash("Speed");
     static readonly int ThrowHash = Animator.StringToHash("Throw");
+   
 
     [Header("References")]
     public CharacterController characterController;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         _lineRenderer = GetComponent<LineRenderer>();
+       
     }
 
     void Update()
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_axeState == AxeState.Held && Mouse.current.leftButton.wasPressedThisFrame)
         {
+            
             _axeState = AxeState.Throwing;
             animator.SetTrigger(ThrowHash);
         }
@@ -82,7 +85,7 @@ public class PlayerController : MonoBehaviour
     public void LaunchAxe()
     {
         if (_axeState != AxeState.Throwing) return;
-
+        
         Vector3 direction = transform.forward;
         direction.y = 0f;
         direction.Normalize();
@@ -95,37 +98,33 @@ public class PlayerController : MonoBehaviour
         _axeState = AxeState.Returning;
         axe.rigidbody.isKinematic = true;
         axe.axeCollider.enabled = false;
-        // TODO Slice 8.3 (recall hook): start visual spin for the return.
-        // Next: the Slice 8.3 catch hook in ThrownAxe.AttachToHand.
-
+        axe.tr.enabled = true;
+        
         Vector3 start = axe.transform.position;
-        // TODO Slice 5.3: advance recall progress from 0 to 1 over returnDuration,
-        // one step per frame, replacing the one-frame wait below.
-        // The catch runs only after progress reaches 1.
-        // Check: a stuck or mid-flight axe waits returnDuration, then snaps to the hand.
-        // Next: Slice 5.4 below.
+        float elapsedTime = 0f;
+        while (elapsedTime < returnDuration)
+        {
+            float t = elapsedTime / returnDuration;
+            Vector3 p0 = start;
+            Vector3 p2 = axe.CatchPosition;
+            Vector3 p1 = (p0+p2)* 0.5f + transform.right * bowAmount;
+            axe.transform.position = QuadraticBezierMath.SamplePointBernstein(p0, p1, p2,t);
+            axe.transform.Rotate(Vector3.forward, axe.spinspeed * Time.deltaTime, Space.Self);
+           
+            yield return null;
+            elapsedTime += Time.deltaTime;
+          
+        }
 
-        // TODO Slice 5.4: each frame, place the axe on the GetReturnControlPoints curve
-        // at the recall progress. The basic curve can stay fixed for the whole recall.
-        // Check: standing still, recall follows the preview's bow at two bowAmount values.
-        // Two full throw-and-recall cycles work, and so does recall mid-flight.
-        // Next: optional Slice 5.5 below, or open Demo, Slice 6.1 in
-        // Bezier/QuadraticBezierMath.cs. </> end of Slice 5
-
-        // TODO Slice 5.5 (optional): keep the start fixed; let the handle and end
-        // follow the moving hand.
-        // Check: turn during recall. The axe still lands in the animated grip.
-        // Next: open Demo, Slice 6.1 in Bezier/QuadraticBezierMath.cs.
-        yield return null;
-
-        axe.AttachToHand();
-        _axeState = AxeState.Held;
+         axe.AttachToHand();
+         axe.tr.enabled = false;
+         _axeState = AxeState.Held;
     }
 
     (Vector3 p0, Vector3 p1, Vector3 p2) GetReturnControlPoints(Vector3 start)
     {
         Vector3 end = axe.CatchPosition;
-        // TODO Slice 5.1: bow the return curve sideways to the axe-to-hand direction.
+        
         // bowAmount controls how far.
         // Next: Slice 5.2 in DrawReturnPath, where you can see the bow.
         Vector3 middle = (start + end) * 0.5f;
@@ -164,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
     void DrawReturnPath()
     {
-        // TODO Slice 5.2: draw the curve from GetReturnControlPoints with ten samples,
+        
         // evenly spaced in t, from the axe to the hand. Recall (5.4) reuses the same curve.
         // Check: throw. While Away, the preview bows from the axe to the hand.
         // Changing bowAmount changes the bow.

@@ -918,6 +918,11 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!198 &508100528 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8678934642077666092, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
+  m_PrefabInstance: {fileID: 579100208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &579100208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1110,18 +1115,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 118.5734
       objectReference: {fileID: 0}
-    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
-      propertyPath: bowAmount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
-      propertyPath: throwImpulse
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
-      propertyPath: returnDuration
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 6999358129310414010, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -13.855927
@@ -1185,6 +1178,22 @@ PrefabInstance:
     - target: {fileID: 7347594818347921774, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 109.52787
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
+      propertyPath: bowAmount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
+      propertyPath: axeParticles
+      value: 
+      objectReference: {fileID: 508100528}
+    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
+      propertyPath: throwImpulse
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035799169309193475, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
+      propertyPath: returnDuration
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8172921655139685484, guid: e8b9f61d426e84845979e0f0dc0a4ab4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -12,7 +12,7 @@ public static class CurveGizmos
 {
     public static void Draw(int numSamples, Func<float, Vector3> samplePoint, params Transform[] controlPoints)
     {
-        // TODO Slice 1.1: mark each control point with a white wire sphere of radius 0.1.
+       
         // The cubic reuses this helper, so do not assume three points.
         // Next: Slice 1.2 in QuadraticBezierCurve.cs, where you can see the markers.
         Gizmos.color = Color.white;
@@ -22,7 +22,7 @@ public static class CurveGizmos
         }
        
 
-        // TODO Slice 1.3: connect adjacent control points with red lines. Leave it open.
+        
         // Check: the polygon follows moved points, even before any curve math works.
         // Next: Slice 1.4 in Bezier/QuadraticBezierMath.cs.
         Gizmos.color = Color.red;
@@ -32,7 +32,7 @@ public static class CurveGizmos
             Gizmos.DrawLine(lastPosition,controlPoints[i].position);
             lastPosition = controlPoints[i].position;
         }
-        // TODO Slice 1.6: draw the curve in white with numSamples points from samplePoint.
+       
         // Space them evenly in t and include both endpoints.
         // Check: the curve reaches both endpoints and follows moved points.
         // Next: Slice 1.7 in QuadraticBezierCurve.cs, Start.
